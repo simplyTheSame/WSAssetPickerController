@@ -19,6 +19,8 @@
 
 #import "WSAssetViewColumn.h"
 #import "WSAssetWrapper.h"
+#import <QuartzCore/QuartzCore.h>
+
 
 @interface WSAssetViewColumn ()
 @property (nonatomic, weak) UIImageView *selectedView;
@@ -57,6 +59,9 @@
         UIImageView *assetImageView = [[UIImageView alloc] initWithFrame:ASSET_VIEW_FRAME];
         assetImageView.contentMode = UIViewContentModeScaleToFill;
         assetImageView.image = thumbnail;
+        assetImageView.layer.borderWidth = 1;
+        assetImageView.layer.borderColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.25].CGColor;
+        
         [self addSubview:assetImageView];
     }
     return self;
