@@ -77,6 +77,15 @@
     return _assetGroups;
 }
 
+- (NSString *)navigationItemTitle
+{
+    if (!_navigationItemTitle) {
+        return @"Albums";
+    }
+    
+    return _navigationItemTitle;
+}
+
 #pragma mark - View Lifecycle
 
 
@@ -108,7 +117,7 @@
         if (group == nil) {
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                self.navigationItem.title = @"Albums";
+                self.navigationItem.title = self.navigationItemTitle;
             });
             return;
         }

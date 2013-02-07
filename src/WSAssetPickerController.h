@@ -17,7 +17,9 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+
 #import <UIKit/UIKit.h>
+
 
 @protocol WSAssetPickerControllerDelegate;
 
@@ -25,6 +27,7 @@
 
 @property (nonatomic, readonly) NSArray *selectedAssets;
 @property (nonatomic, readonly) NSUInteger selectedCount; // Observable via key-value observing.
+@property (nonatomic, strong) NSString *albumTableNavigationItemTitle;
 
 // Designated initializer.
 - (id)initWithDelegate:(id<WSAssetPickerControllerDelegate>)delegate;
