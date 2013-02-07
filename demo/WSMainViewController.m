@@ -137,6 +137,14 @@
     }];
 }
 
+- (void)assetPickerControllerDidFailWithError
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIAlertView *alert =  [[UIAlertView alloc] initWithTitle:@"Error" message:@"Not allowed to access asset library." delegate:nil cancelButtonTitle:@"Shoot!" otherButtonTitles:nil];
+        [alert show];
+    });
+}
+
 #pragma mark - UIScrollViewDelegate Methods
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView

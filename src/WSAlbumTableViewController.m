@@ -129,7 +129,15 @@
         });
         
     } failureBlock:^(NSError *error) {
-        // TODO: User denied access. Tell them we can't do anything.
+        id <WSAssetPickerControllerDelegate> delegate = (id <WSAssetPickerControllerDelegate>)self.pickerDelegate;
+        
+        if (error.code == ALAssetsLibraryAccessUserDeniedError || error.code == ALAssetsLibraryAccessGloballyDeniedError) {
+            NSLog(@"errorCode: %d", error.code);
+            if ([delegate respondsToSelector:@selector(assetPickerControllerDidFailWithError)]) {
+                [delegate assetPickerControllerDidFailWithError];
+            }
+        }
+
     }];
 }
 

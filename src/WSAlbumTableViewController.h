@@ -17,12 +17,16 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+
 #import <UIKit/UIKit.h>
+#import "WSAssetPickerController.h"
+
 
 @class WSAssetPickerState;
 
 @interface WSAlbumTableViewController : UITableViewController
 @property (nonatomic, weak) WSAssetPickerState *assetPickerState;
+@property (nonatomic, weak) id<WSAssetPickerControllerDelegate> pickerDelegate;
 - (void)setAssetGroupTypes:(ALAssetsGroupType)types;
 - (void)setAssetsFilter:(ALAssetsFilter *)filter;
 @end

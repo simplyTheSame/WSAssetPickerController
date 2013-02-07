@@ -34,12 +34,20 @@
 @end
 
 
-@protocol WSAssetPickerControllerDelegate <UINavigationControllerDelegate>
+@protocol WSAssetPickerControllerDelegate <NSObject>
 
 // Called when the 'cancel' button it tapped.
 - (void)assetPickerControllerDidCancel:(WSAssetPickerController *)sender;
 
 // Called when the done button is tapped.
 - (void)assetPickerController:(WSAssetPickerController *)sender didFinishPickingMediaWithAssets:(NSArray *)assets;
+
+
+
+// Optional but encouraged to implement!
+@optional
+
+// Called when access to asset library was denied. Enabled so show custom error message to the user.
+- (void)assetPickerControllerDidFailWithError;
 
 @end

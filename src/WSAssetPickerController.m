@@ -17,15 +17,20 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+
 #import "WSAssetPickerController.h"
 #import "WSAssetPickerState.h"
 #import "WSAlbumTableViewController.h"
 
+
 @interface WSAssetPickerController ()
+
 @property (nonatomic, strong) WSAssetPickerState *assetPickerState;
 @property (nonatomic, readwrite) NSUInteger selectedCount;
 @property (nonatomic) UIStatusBarStyle originalStatusBarStyle;
 @property (nonatomic, strong) WSAlbumTableViewController *albumTableViewController;
+@property (nonatomic, weak) id<WSAssetPickerControllerDelegate> pickerDelegate;
+
 @end
 
 
@@ -46,12 +51,12 @@
     // Create the Album TableView Controller.
     self.albumTableViewController = [[WSAlbumTableViewController alloc] initWithStyle:UITableViewStylePlain];
     self.albumTableViewController.assetPickerState = self.assetPickerState;
+    self.albumTableViewController.pickerDelegate = delegate;
     
     if ((self = [super initWithRootViewController:self.albumTableViewController])) {
-        
         self.navigationBar.barStyle = UIBarStyleBlackTranslucent;
         self.toolbar.barStyle = UIBarStyleBlackTranslucent;
-        self.delegate = delegate;
+        self.pickerDelegate = delegate;
     }
     
     return self;
@@ -101,7 +106,7 @@
         DLog(@"State Changed: %@", change);
         
         // Cast the delegate to the assetPickerDelegate.
-        id <WSAssetPickerControllerDelegate> delegate = (id <WSAssetPickerControllerDelegate>)self.delegate;
+        id <WSAssetPickerControllerDelegate> delegate = (id <WSAssetPickerControllerDelegate>)self.pickerDelegate;
         
         if (WSAssetPickerStatePickingCancelled == self.assetPickerState.state) {
             if ([delegate conformsToProtocol:@protocol(WSAssetPickerControllerDelegate)]) {
