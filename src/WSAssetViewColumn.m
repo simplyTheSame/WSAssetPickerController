@@ -17,12 +17,17 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+
 #import "WSAssetViewColumn.h"
 #import "WSAssetWrapper.h"
 #import <QuartzCore/QuartzCore.h>
 
+#define SELECTED_IMAGE @"WSAssetViewSelectionIndicator.png"
+#define VIDEO_IMAGE @"WSAssetViewVideoIndicator.png"
+
 
 @interface WSAssetViewColumn ()
+
 @property (nonatomic, weak) UIImageView *selectedView;
 @property (nonatomic, weak) UIImageView *videoView;
 @end
@@ -59,6 +64,7 @@
         
         [self addSubview:assetImageView];
     }
+    
     return self;
 }
 
@@ -80,12 +86,10 @@
     [self setNeedsDisplay];
 }
 
-#define SELECTED_IMAGE @"WSAssetViewSelectionIndicator.png"
 
 - (UIImageView *)selectedView
 {
     if (!_selectedView) {
-        
         // Lazily create the selectedView.
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:SELECTED_IMAGE]];
         imageView.hidden = YES;
@@ -96,9 +100,6 @@
     return _selectedView;
 }
 
-
-
-#define VIDEO_IMAGE @"WSAssetViewVideoIndicator.png"
 
 - (void)markAsVideo:(BOOL)isVideo {
     if(!_videoView) {
@@ -121,4 +122,5 @@
         self.selected = !self.isSelected;
     }
 }
+
 @end

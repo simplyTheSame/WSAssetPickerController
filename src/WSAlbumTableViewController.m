@@ -122,7 +122,7 @@
 
         [group setAssetsFilter:self.filter];
 
-        if(![group numberOfAssets]) {
+        if (![group numberOfAssets]) {
             // No sense showing empty groups/albums
             return;
         }

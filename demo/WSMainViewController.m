@@ -98,28 +98,25 @@
     [activityView startAnimating];
     
     [self dismissViewControllerAnimated:YES completion:^{
-        
-        if (assets.count < 1) return;
+        if (assets.count < 1) {
+            return;
+        }
         
         CGSize contentSize;
         contentSize.width = self.scrollView.frame.size.width * assets.count;
         contentSize.height = self.scrollView.frame.size.height;
         self.scrollView.contentSize = contentSize;
         
-        
         self.pageControl.hidden = NO;
         self.pageControl.numberOfPages = assets.count;
         
-        
         int index = 0;
-        
         for (ALAsset *asset in assets) {
             
             CGRect imageViewFrame;
             imageViewFrame.origin.x = self.scrollView.frame.size.width * index;
             imageViewFrame.origin.y = 0;
             imageViewFrame.size = self.scrollView.frame.size;
-           
             
             UIImage *image = [[UIImage alloc] initWithCGImage:asset.defaultRepresentation.fullScreenImage];
             UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
@@ -130,7 +127,9 @@
             index++;
             
             [self.scrollView addSubview:imageView];
-            if (index == 0) [activityView stopAnimating];
+            if (index == 0) {
+                [activityView stopAnimating];
+            }
         }
         
         [self.scrollView flashScrollIndicators];

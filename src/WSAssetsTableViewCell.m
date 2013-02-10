@@ -49,7 +49,6 @@
     for (WSAssetViewColumn *assetViewColumn in self.cellAssetViews) {
         
         [assetViewColumn removeObserver:self forKeyPath:@"isSelected"];
-        
         [assetViewColumn removeFromSuperview];
     }
 }
@@ -66,7 +65,7 @@
         
         WSAssetViewColumn *assetViewColumn = [[WSAssetViewColumn alloc] initWithImage:[UIImage imageWithCGImage:assetWrapper.asset.thumbnail]];
 
-        if([[assetWrapper.asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo]) {
+        if ([[assetWrapper.asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo]) {
             [assetViewColumn markAsVideo:YES];
         }
         
@@ -123,7 +122,6 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([object isMemberOfClass:[WSAssetViewColumn class]]) {
-        //DLog(@"%@", change);
         
         WSAssetViewColumn *column = (WSAssetViewColumn *)object;
         if ([self.delegate respondsToSelector:@selector(assetsTableViewCell:didSelectAsset:atColumn:)]) {
@@ -132,8 +130,6 @@
         }
     }
 }
-
-
 
 - (void)dealloc
 {
