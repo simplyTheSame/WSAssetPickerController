@@ -17,23 +17,23 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+
 #import "WSMainViewController.h"
 #import "WSAssetPicker.h"
 #import <QuartzCore/QuartzCore.h>
 
+
 @interface WSMainViewController () <WSAssetPickerControllerDelegate>
+
 @property (nonatomic, strong) WSAssetPickerController *pickerController;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 @property (nonatomic, readwrite) BOOL pageControlInUse;
+
 @end
 
 
 @implementation WSMainViewController
-@synthesize pickerController = _pickerController;
-@synthesize scrollView = _scrollView;
-@synthesize pageControl = _pageControl;
-@synthesize pageControlInUse = _pageControlInUse;
 
 - (void)setScrollView:(UIScrollView *)scrollView
 {

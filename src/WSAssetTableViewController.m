@@ -32,10 +32,7 @@
 
 @implementation WSAssetTableViewController
 
-@synthesize assetPickerState = _assetPickerState;
-@synthesize assetsGroup = _assetsGroup;
-@synthesize fetchedAssets = _fetchedAssets;
-@synthesize assetsPerRow =_assetsPerRow;
+@synthesize assetsPerRow = _assetsPerRow;
 
 
 #pragma mark - View Lifecycle

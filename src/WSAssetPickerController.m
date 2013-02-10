@@ -38,11 +38,6 @@
 
 @dynamic selectedAssets;
 
-@synthesize assetPickerState = _assetPickerState;
-@synthesize selectedCount = _selectedCount;
-@synthesize originalStatusBarStyle = _originalStatusBarStyle;
-@synthesize albumTableViewController = _albumTableViewController;
-
 
 #pragma mark - Initialization
 

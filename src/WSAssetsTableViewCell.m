@@ -17,15 +17,13 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+
 #import "WSAssetsTableViewCell.h"
 #import "WSAssetWrapper.h"
 #import "WSAssetViewColumn.h"
 
 
 @implementation WSAssetsTableViewCell
-
-@synthesize delegate = _delegate;
-@synthesize cellAssetViews = _cellAssetViews;
 
 + (WSAssetsTableViewCell *)assetsCellWithAssets:(NSArray *)assets reuseIdentifier:(NSString *)identifier
 {

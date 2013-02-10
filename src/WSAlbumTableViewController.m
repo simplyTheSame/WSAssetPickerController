@@ -23,18 +23,16 @@
 
 
 @interface WSAlbumTableViewController ()
+
 @property (nonatomic, strong) ALAssetsLibrary *assetsLibrary;
 @property (nonatomic, strong) NSMutableArray *assetGroups; // Model (all groups of assets).
 @property (nonatomic, strong) ALAssetsFilter *filter;
 @property ALAssetsGroupType groupTypes;
+
 @end
 
 
 @implementation WSAlbumTableViewController
-
-@synthesize assetPickerState = _assetPickerState;
-@synthesize assetsLibrary = _assetsLibrary;
-@synthesize assetGroups = _assetGroups;
 
 
 #pragma mark - Init

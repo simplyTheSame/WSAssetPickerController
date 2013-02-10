@@ -30,11 +30,6 @@
 
 @implementation WSAssetViewColumn
 
-@synthesize column = _column;
-@synthesize selected = _selected;
-@synthesize selectedView = _selectedView;
-@synthesize videoView = _videoView;
-
 
 #pragma mark - Initialization
 
