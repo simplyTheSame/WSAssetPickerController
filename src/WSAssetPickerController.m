@@ -139,13 +139,5 @@
     [self.albumTableViewController setAssetsFilter:filter];
 }
 
-#pragma mark - Album table settings
-
-- (void)setAlbumTableNavigationItemTitle:(NSString *)title
-{
-    if (title) {
-        self.albumTableViewController.navigationItemTitle = title;
-    }
-}
 
 @end

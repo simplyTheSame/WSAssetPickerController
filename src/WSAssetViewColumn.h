@@ -17,16 +17,18 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+
 #import <UIKit/UIKit.h>
+
 
 @interface WSAssetViewColumn : UIView
 
 @property (nonatomic) NSUInteger column;
 @property (nonatomic, getter=isSelected) BOOL selected;
+@property (nonatomic, strong) NSString *selectedAssetImageName;
+@property (nonatomic, strong) NSString *videoAssetImageName;
 
-+ (WSAssetViewColumn *)assetViewWithImage:(UIImage *)thumbnail;
-
-- (id)initWithImage:(UIImage *)thumbnail;
+- (id)initWithImage:(UIImage *)thumbnail andFrame:(CGRect)frame;
 - (void)markAsVideo:(BOOL)isVideo;
 
 @end

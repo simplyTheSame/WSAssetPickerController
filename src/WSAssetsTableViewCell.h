@@ -17,21 +17,25 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+
 #import <UIKit/UIKit.h>
+#import "WSAssetTableViewController.h"
+
 
 @protocol WSAssetsTableViewCellDelegate;
+
 
 @interface WSAssetsTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) NSArray *cellAssetViews;
-
-@property (nonatomic, weak) id <WSAssetsTableViewCellDelegate> delegate;
+@property (nonatomic, strong) AssetCellParams *assetCellParams;
+@property (nonatomic, weak) id<WSAssetsTableViewCellDelegate> assetTableViewDelegate;
 
 + (WSAssetsTableViewCell *)assetsCellWithAssets:(NSArray *)assets reuseIdentifier:(NSString *)identifier;
-
-- (id)initWithAssets:(NSArray *)assets reuseIdentifier:(NSString *)identifier;
+- (id)initWithAssets:(NSArray *)assets assetCellParams:(AssetCellParams*)assetCellParams reuseIdentifier:(NSString *)identifier;
 
 @end
+
 
 @protocol WSAssetsTableViewCellDelegate <NSObject>
 

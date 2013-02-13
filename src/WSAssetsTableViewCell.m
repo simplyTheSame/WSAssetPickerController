@@ -33,10 +33,10 @@
     return cell;
 }
 
-- (id)initWithAssets:(NSArray *)assets reuseIdentifier:(NSString *)identifier
+- (id)initWithAssets:(NSArray *)assets assetCellParams:(AssetCellParams *)assetCellParams reuseIdentifier:(NSString *)identifier
 {
     if ((self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier])) {
-        
+        self.assetCellParams = assetCellParams;
         self.cellAssetViews = assets;
     }
     
@@ -62,8 +62,8 @@
     NSMutableArray *columns = [NSMutableArray arrayWithCapacity:[assets count]];
     
     for (WSAssetWrapper *assetWrapper in assets) {
-        
-        WSAssetViewColumn *assetViewColumn = [[WSAssetViewColumn alloc] initWithImage:[UIImage imageWithCGImage:assetWrapper.asset.thumbnail]];
+        CGRect frame = CGRectMake(0, 0, self.assetCellParams.assetWidth, self.assetCellParams.assetWidth);
+        WSAssetViewColumn *assetViewColumn = [[WSAssetViewColumn alloc] initWithImage:[UIImage imageWithCGImage:assetWrapper.asset.thumbnail] andFrame:frame];
 
         if ([[assetWrapper.asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo]) {
             [assetViewColumn markAsVideo:YES];
@@ -81,39 +81,30 @@
     _cellAssetViews = columns;
 }
 
-#define ASSET_VIEW_FRAME CGRectMake(0, 0, 75, 75)
-#define ASSET_VIEW_PADDING 4
 
 - (void)layoutSubviews
 {
     // Calculate the container's width.
-    int assetsPerRow = self.frame.size.width / ASSET_VIEW_FRAME.size.width;    
-    float containerWidth = assetsPerRow * ASSET_VIEW_FRAME.size.width + (assetsPerRow - 1) * ASSET_VIEW_PADDING;
+    int assetsPerRow = self.assetCellParams.assetsPerRow;
+    float containerWidth = assetsPerRow * self.assetCellParams.assetWidth + (assetsPerRow - 1) * self.assetCellParams.paddingWidth;
     
     // Create the container frame dynamically.
     CGRect containerFrame;
-    containerFrame.origin.x = (self.frame.size.width - containerWidth) / 2;
-    containerFrame.origin.y = (self.frame.size.height - ASSET_VIEW_FRAME.size.height) / 2;
+    containerFrame.origin.x = self.assetCellParams.borderWidth;
+    containerFrame.origin.y = 0;
     containerFrame.size.width = containerWidth;
-    containerFrame.size.height = ASSET_VIEW_FRAME.size.height;
+    containerFrame.size.height = self.assetCellParams.assetWidth;
     
     // Create a containing view with flexible margins.
     UIView *assetsContainerView = [[UIView alloc] initWithFrame:containerFrame];
-    assetsContainerView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | 
-    UIViewAutoresizingFlexibleRightMargin | 
-    UIViewAutoresizingFlexibleTopMargin | 
-    UIViewAutoresizingFlexibleBottomMargin;
-    
-    CGRect frame = ASSET_VIEW_FRAME;
+    CGRect frame = CGRectMake(0, 0, self.assetCellParams.assetWidth, self.assetCellParams.assetWidth);
     
     for (WSAssetViewColumn *assetView in self.cellAssetViews) {
-        
         assetView.frame = frame;
-        
         [assetsContainerView addSubview:assetView];
         
         // Adjust the frame x-origin of the next assetView.
-        frame.origin.x = frame.origin.x + frame.size.width + ASSET_VIEW_PADDING;
+        frame.origin.x = frame.origin.x + frame.size.width + self.assetCellParams.paddingWidth;
     }                                              
     
     [self addSubview:assetsContainerView];
@@ -124,9 +115,8 @@
     if ([object isMemberOfClass:[WSAssetViewColumn class]]) {
         
         WSAssetViewColumn *column = (WSAssetViewColumn *)object;
-        if ([self.delegate respondsToSelector:@selector(assetsTableViewCell:didSelectAsset:atColumn:)]) {
-
-            [self.delegate assetsTableViewCell:self didSelectAsset:column.isSelected atColumn:column.column];
+        if ([self.assetTableViewDelegate respondsToSelector:@selector(assetsTableViewCell:didSelectAsset:atColumn:)]) {
+            [self.assetTableViewDelegate assetsTableViewCell:self didSelectAsset:column.isSelected atColumn:column.column];
         }
     }
 }

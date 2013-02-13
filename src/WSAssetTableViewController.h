@@ -17,9 +17,22 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+
 #import <UIKit/UIKit.h>
 
+
 @class WSAssetPickerState;
+
+
+@interface AssetCellParams : NSObject
+
+@property (nonatomic) int assetsPerRow;
+@property (nonatomic) CGFloat assetWidth;
+@property (nonatomic) CGFloat paddingWidth;
+@property (nonatomic) CGFloat borderWidth;
+
+@end
+
 
 @interface WSAssetTableViewController : UITableViewController
 

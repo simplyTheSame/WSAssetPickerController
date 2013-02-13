@@ -17,9 +17,12 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+
 #import "WSAlbumTableViewController.h"
 #import "WSAssetPickerState.h"
 #import "WSAssetTableViewController.h"
+
+#import "WSAlbumViewCell.h"
 
 
 @interface WSAlbumTableViewController ()
@@ -75,23 +78,13 @@
     return _assetGroups;
 }
 
-- (NSString *)navigationItemTitle
-{
-    if (!_navigationItemTitle) {
-        return @"Albums";
-    }
-    
-    return _navigationItemTitle;
-}
+
 
 #pragma mark - View Lifecycle
-
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    self.wantsFullScreenLayout = YES;
     
     self.assetPickerState.state = WSAssetPickerStatePickingAlbum;
     
@@ -115,7 +108,7 @@
         if (group == nil) {
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                self.navigationItem.title = self.navigationItemTitle;
+                self.navigationItem.title = [WSAssetPickerConfig sharedInstance].albumTableNavigationItemTitle;
             });
             return;
         }
@@ -175,18 +168,19 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"WSAlbumCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    WSAlbumViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[WSAlbumViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     // Get the group from the datasource.
     ALAssetsGroup *group = [self.assetGroups objectAtIndex:indexPath.row];
     
     // Setup the cell.
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ (%d)", [group valueForProperty:ALAssetsGroupPropertyName], [group numberOfAssets]];
-    cell.imageView.image = [UIImage imageWithCGImage:[group posterImage]];
+    cell.albumTitleLabel.text = [group valueForProperty:ALAssetsGroupPropertyName];
+    cell.assetCountLabel.text = [NSString stringWithFormat:[WSAssetPickerConfig sharedInstance].albumTableAssetCountLabelFormat, [group numberOfAssets]];
+    cell.albumThumbnailView.image = [UIImage imageWithCGImage:[group posterImage]];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
@@ -206,11 +200,9 @@
     [self.navigationController pushViewController:assetTableViewController animated:YES];
 }
 
-#define ROW_HEIGHT 57.0f
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath 
 {	
-	return ROW_HEIGHT;
+	return [WSAlbumViewCell rowHeight];
 }
 
 @end

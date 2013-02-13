@@ -28,8 +28,9 @@
 @interface WSAlbumTableViewController : UITableViewController
 
 @property (nonatomic, weak) WSAssetPickerState *assetPickerState;
-@property (nonatomic, strong) NSString *navigationItemTitle;
 @property (nonatomic, weak) id<WSAssetPickerControllerDelegate> pickerDelegate;
+
 - (void)setAssetGroupTypes:(ALAssetsGroupType)types;
 - (void)setAssetsFilter:(ALAssetsFilter *)filter;
+
 @end

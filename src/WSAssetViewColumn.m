@@ -18,18 +18,18 @@
 //  limitations under the License.
 
 
+#import "WSAssetPickerConfig.h"
 #import "WSAssetViewColumn.h"
 #import "WSAssetWrapper.h"
 #import <QuartzCore/QuartzCore.h>
-
-#define SELECTED_IMAGE @"WSAssetViewSelectionIndicator.png"
-#define VIDEO_IMAGE @"WSAssetViewVideoIndicator.png"
 
 
 @interface WSAssetViewColumn ()
 
 @property (nonatomic, weak) UIImageView *selectedView;
 @property (nonatomic, weak) UIImageView *videoView;
+@property (nonatomic) CGRect assetFrame;
+
 @end
 
 
@@ -38,28 +38,25 @@
 
 #pragma mark - Initialization
 
-#define ASSET_VIEW_FRAME CGRectMake(0, 0, 75, 75)
-
-+ (WSAssetViewColumn *)assetViewWithImage:(UIImage *)thumbnail
+- (id)initWithImage:(UIImage *)thumbnail andFrame:(CGRect)frame
 {
-    WSAssetViewColumn *assetView = [[WSAssetViewColumn alloc] initWithImage:thumbnail];
-    
-    return assetView;
-}
-
-- (id)initWithImage:(UIImage *)thumbnail
-{
-    if ((self = [super initWithFrame:ASSET_VIEW_FRAME])) {
+    if (self = [super initWithFrame:frame]) {
+        _assetFrame = frame;
         
         // Setup a tap gesture.
         UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userDidTapAction:)];
         [self addGestureRecognizer:tapGestureRecognizer];
         
         // Add the photo thumbnail.
-        UIImageView *assetImageView = [[UIImageView alloc] initWithFrame:ASSET_VIEW_FRAME];
+        UIImageView *assetImageView = [[UIImageView alloc] initWithFrame:frame];
         assetImageView.contentMode = UIViewContentModeScaleToFill;
         assetImageView.image = thumbnail;
-        assetImageView.layer.borderWidth = 1;
+        assetImageView.layer.borderWidth = 0.5;
+        
+        if ([UIScreen mainScreen].scale < 1.5) {
+            assetImageView.layer.borderWidth = 1.0;
+        }
+        
         assetImageView.layer.borderColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.25].CGColor;
         
         [self addSubview:assetImageView];
@@ -86,27 +83,37 @@
     [self setNeedsDisplay];
 }
 
-
 - (UIImageView *)selectedView
 {
     if (!_selectedView) {
         // Lazily create the selectedView.
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:SELECTED_IMAGE]];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[WSAssetPickerConfig sharedInstance].selectedAssetImageName]];
+        imageView.frame = self.assetFrame;
         imageView.hidden = YES;
+        imageView.layer.borderWidth = 0.5;
+        if ([UIScreen mainScreen].scale < 1.5) {
+            imageView.layer.borderWidth = 1.0;
+        }
+
+        imageView.layer.borderColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.7].CGColor;
+        
         [self addSubview:imageView];
         
         _selectedView = imageView;
     }
+    
     return _selectedView;
 }
 
 
 - (void)markAsVideo:(BOOL)isVideo {
     if(!_videoView) {
-        UIImageView *videoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:VIDEO_IMAGE]];
+        UIImageView *videoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[WSAssetPickerConfig sharedInstance].videoAssetImageName]];
+        videoView.frame = self.assetFrame;
         _videoView = videoView;
         [self addSubview:videoView];
     }
+    
     _videoView.hidden = !isVideo;
 }
 

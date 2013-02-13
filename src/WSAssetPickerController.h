@@ -19,6 +19,7 @@
 
 
 #import <UIKit/UIKit.h>
+#import "WSAssetPickerConfig.h"
 
 
 @protocol WSAssetPickerControllerDelegate;
@@ -27,10 +28,10 @@
 
 @property (nonatomic, readonly) NSArray *selectedAssets;
 @property (nonatomic, readonly) NSUInteger selectedCount; // Observable via key-value observing.
-@property (nonatomic, strong) NSString *albumTableNavigationItemTitle;
 
 // Designated initializer.
 - (id)initWithDelegate:(id<WSAssetPickerControllerDelegate>)delegate;
+
 - (void)setAssetGroupTypes:(ALAssetsGroupType)types;
 - (void)setAssetsFilter:(ALAssetsFilter *)filter;
 

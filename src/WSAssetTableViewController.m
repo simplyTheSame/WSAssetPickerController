@@ -17,39 +17,51 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+
 #import "WSAssetTableViewController.h"
 #import "WSAssetPickerState.h"
 #import "WSAssetsTableViewCell.h"
 #import "WSAssetWrapper.h"
 
-#define ASSET_WIDTH_WITH_PADDING 79.0f
+#define ASSET_MIN_WIDTH 75
+#define PADDING_MIN_WIDTH 4.0
+#define BORDER_MIN_WIDTH 4.0
+
+
+@implementation AssetCellParams
+
+@end
+
 
 @interface WSAssetTableViewController () <WSAssetsTableViewCellDelegate>
+
 @property (nonatomic, strong) NSMutableArray *fetchedAssets;
 @property (nonatomic, readonly) NSInteger assetsPerRow;
+@property (nonatomic, readonly) AssetCellParams *assetCellParams;
+
 @end
 
 
 @implementation WSAssetTableViewController
 
 @synthesize assetsPerRow = _assetsPerRow;
+@synthesize assetCellParams = _assetCellParams;
 
 
 #pragma mark - View Lifecycle
 
-#define TABLEVIEW_INSETS UIEdgeInsetsMake(2, 0, 2, 0);
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    self.wantsFullScreenLayout = YES;
     
     // Setup the toolbar if there are items in the navigationController's toolbarItems.
     if (self.navigationController.toolbarItems.count > 0) {
         self.toolbarItems = self.navigationController.toolbarItems;
         [self.navigationController setToolbarHidden:NO animated:YES];
     }
+    
+    CGFloat navHeight = self.navigationController.navigationBar.frame.size.height;
+    self.tableView.contentInset = UIEdgeInsetsMake(self.assetCellParams.borderWidth + navHeight, 0, 0, 0);
     
     self.assetPickerState.state = WSAssetPickerStatePickingAssets;
     
@@ -75,12 +87,9 @@
                                                                                            target:self 
                                                                                            action:@selector(doneButtonAction:)];
     
-    
     // TableView configuration.
-    self.tableView.contentInset = TABLEVIEW_INSETS;
     self.tableView.separatorColor = [UIColor clearColor];
     self.tableView.allowsSelection = NO;
-    
     
     // Fetch the assets.
     [self fetchAssets];
@@ -97,9 +106,44 @@
     return _fetchedAssets;
 }
 
+- (AssetCellParams *)assetCellParams
+{
+    if (_assetCellParams.assetsPerRow == 0) {
+        
+        CGFloat paddingWidth = PADDING_MIN_WIDTH;
+        CGFloat assetWidth = ASSET_MIN_WIDTH;
+
+        CGFloat contentWidth = self.tableView.frame.size.width;
+        CGFloat assetsPerRow = floorf(contentWidth / (assetWidth + paddingWidth));
+
+        CGFloat assetsWidth = assetsPerRow * assetWidth;
+        CGFloat paddingsWidth = (assetsPerRow - 1) * paddingWidth;
+        
+        CGFloat borderLeft = floorf((contentWidth - (assetsWidth + paddingsWidth)) / 2.0);
+        
+        if (borderLeft > 2 * paddingWidth) {
+            assetWidth = floorf((contentWidth - (assetsPerRow + 1) * paddingWidth) / assetsPerRow);
+            
+            assetsWidth = assetsPerRow * assetWidth;
+            paddingsWidth = (assetsPerRow - 1) * paddingWidth;
+            
+            borderLeft = floorf((contentWidth - (assetsWidth + paddingsWidth)) / 2.0);
+        }
+        
+        AssetCellParams *params = [AssetCellParams new];
+        params.assetWidth = assetWidth;
+        params.borderWidth = borderLeft;
+        params.paddingWidth = paddingWidth;
+        params.assetsPerRow = assetsPerRow;
+        
+        _assetCellParams = params;
+    }
+    return _assetCellParams;
+}
+
 - (NSInteger)assetsPerRow
 {
-    return MAX(1, (NSInteger)floorf(self.tableView.contentSize.width / ASSET_WIDTH_WITH_PADDING));
+    return self.assetCellParams.assetsPerRow;
 }
 
 #pragma mark - Rotation
@@ -111,6 +155,10 @@
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
+    _assetCellParams = nil;
+    
+    CGFloat navHeight = self.navigationController.navigationBar.frame.size.height;
+    self.tableView.contentInset = UIEdgeInsetsMake(self.assetCellParams.borderWidth + navHeight, 0, 0, 0);
     [self.tableView reloadData];
 }
 
@@ -155,7 +203,6 @@
     dispatch_release(enumQ);
 #endif
 
-    
     [self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.5];
 }
 
@@ -216,25 +263,22 @@
     WSAssetsTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:AssetCellIdentifier];
     
     if (cell == nil) {
-        
-        cell = [[WSAssetsTableViewCell alloc] initWithAssets:[self assetsForIndexPath:indexPath] reuseIdentifier:AssetCellIdentifier];        
+        cell = [[WSAssetsTableViewCell alloc] initWithAssets:[self assetsForIndexPath:indexPath] assetCellParams:self.assetCellParams reuseIdentifier:AssetCellIdentifier];
     } else {
-        
         cell.cellAssetViews = [self assetsForIndexPath:indexPath];
+        cell.assetCellParams = self.assetCellParams;
     }
-    cell.delegate = self;
+    
+    cell.assetTableViewDelegate = self;
     
     return cell;
 }
 
-
 #pragma mark - Table view delegate
 
-#define ROW_HEIGHT 79.0f
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath 
-{ 
-	return ROW_HEIGHT;
+{
+    return self.assetCellParams.assetWidth + self.assetCellParams.paddingWidth;
 }
 
 @end
