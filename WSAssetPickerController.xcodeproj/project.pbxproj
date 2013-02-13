@@ -26,7 +26,7 @@
 		7E72E6C316C452D30023998B /* WSAlbumViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 7E72E6C116C452D30023998B /* WSAlbumViewCell.h */; };
 		7E72E6C416C452D30023998B /* WSAlbumViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E72E6C216C452D30023998B /* WSAlbumViewCell.m */; };
 		7E72E6FF16C821ED0023998B /* WSAssetPickerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E72E6FE16C821EC0023998B /* WSAssetPickerConfig.m */; };
-		7E72E70416C84CB00023998B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7E72E70616C84CB00023998B /* Localizable.strings */; };
+		7E72E70416C84CB00023998B /* WSAssetPicker.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7E72E70616C84CB00023998B /* WSAssetPicker.strings */; };
 		D84A10E9169E18D9002F7DCC /* WSAssetViewVideoIndicator.png in Resources */ = {isa = PBXBuildFile; fileRef = D84A10E7169E18D9002F7DCC /* WSAssetViewVideoIndicator.png */; };
 		D84A10EA169E18D9002F7DCC /* WSAssetViewVideoIndicator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D84A10E8169E18D9002F7DCC /* WSAssetViewVideoIndicator@2x.png */; };
 		DE017CF9155EC92F002E7BB0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE017CF8155EC92F002E7BB0 /* UIKit.framework */; };
@@ -72,12 +72,12 @@
 		7E72E6C216C452D30023998B /* WSAlbumViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSAlbumViewCell.m; sourceTree = "<group>"; };
 		7E72E6FD16C821EC0023998B /* WSAssetPickerConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSAssetPickerConfig.h; sourceTree = "<group>"; };
 		7E72E6FE16C821EC0023998B /* WSAssetPickerConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSAssetPickerConfig.m; sourceTree = "<group>"; };
-		7E72E70516C84CB00023998B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		7E72E70716C84DC00023998B /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		7E72E70516C84CB00023998B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/WSAssetPicker.strings; sourceTree = "<group>"; };
+		7E72E70716C84DC00023998B /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/WSAssetPicker.strings; sourceTree = "<group>"; };
 		7E72E70816C84DC00023998B /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		7E72E70916C84DC90023998B /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		7E72E70916C84DC90023998B /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/WSAssetPicker.strings; sourceTree = "<group>"; };
 		7E72E70A16C84DC90023998B /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		7E72E70B16C84DD50023998B /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		7E72E70B16C84DD50023998B /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/WSAssetPicker.strings; sourceTree = "<group>"; };
 		7E72E70C16C84DD50023998B /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D84A10E7169E18D9002F7DCC /* WSAssetViewVideoIndicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WSAssetViewVideoIndicator.png; sourceTree = "<group>"; };
 		D84A10E8169E18D9002F7DCC /* WSAssetViewVideoIndicator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WSAssetViewVideoIndicator@2x.png"; sourceTree = "<group>"; };
@@ -214,7 +214,7 @@
 				7E72E6BF16C44EA70023998B /* MainStoryboard_iPad.storyboard */,
 				DEC2AE0D15C5D6270078B2C7 /* WSMainViewController.h */,
 				DEC2AE0E15C5D6270078B2C7 /* WSMainViewController.m */,
-				7E72E70616C84CB00023998B /* Localizable.strings */,
+				7E72E70616C84CB00023998B /* WSAssetPicker.strings */,
 				DEC2AE1715C5D6320078B2C7 /* Supporting Files */,
 			);
 			path = demo;
@@ -351,7 +351,7 @@
 				DEC2AE1515C5D6270078B2C7 /* WSAssetViewSelectionIndicator@2x.png in Resources */,
 				D84A10E9169E18D9002F7DCC /* WSAssetViewVideoIndicator.png in Resources */,
 				D84A10EA169E18D9002F7DCC /* WSAssetViewVideoIndicator@2x.png in Resources */,
-				7E72E70416C84CB00023998B /* Localizable.strings in Resources */,
+				7E72E70416C84CB00023998B /* WSAssetPicker.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,7 +403,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		7E72E70616C84CB00023998B /* Localizable.strings */ = {
+		7E72E70616C84CB00023998B /* WSAssetPicker.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				7E72E70516C84CB00023998B /* en */,
@@ -411,7 +411,7 @@
 				7E72E70916C84DC90023998B /* es */,
 				7E72E70B16C84DD50023998B /* fr */,
 			);
-			name = Localizable.strings;
+			name = WSAssetPicker.strings;
 			sourceTree = "<group>";
 		};
 		DEC2AE0315C5D6270078B2C7 /* InfoPlist.strings */ = {
