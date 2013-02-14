@@ -20,6 +20,7 @@
 
 #import <UIKit/UIKit.h>
 #import "WSAssetPickerConfig.h"
+#import <AssetsLibrary/AssetsLibrary.h>
 
 
 @protocol WSAssetPickerControllerDelegate;

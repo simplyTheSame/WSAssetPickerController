@@ -6,7 +6,10 @@
 //  Copyright (c) 2013 Wesley D. Smith. All rights reserved.
 //
 
+
 #import <Foundation/Foundation.h>
+#import <AssetsLibrary/AssetsLibrary.h>
+
 
 @interface WSAssetPickerConfig : NSObject
 
