@@ -64,7 +64,9 @@
     for (WSAssetWrapper *assetWrapper in assets) {
         CGRect frame = CGRectMake(0, 0, self.assetCellParams.assetWidth, self.assetCellParams.assetWidth);
         WSAssetViewColumn *assetViewColumn = [[WSAssetViewColumn alloc] initWithImage:[UIImage imageWithCGImage:assetWrapper.asset.thumbnail] andFrame:frame];
-
+        assetViewColumn.selectedAssetImageName = self.assetPickerConfig.selectedAssetImageName;
+        assetViewColumn.videoAssetImageName = self.assetPickerConfig.videoAssetImageName;
+        
         if ([[assetWrapper.asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo]) {
             [assetViewColumn markAsVideo:YES];
         }

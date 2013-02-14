@@ -29,9 +29,6 @@
 
 @property (nonatomic, strong) ALAssetsLibrary *assetsLibrary;
 @property (nonatomic, strong) NSMutableArray *assetGroups; // Model (all groups of assets).
-@property (nonatomic, strong) ALAssetsFilter *filter;
-
-@property ALAssetsGroupType groupTypes;
 
 @end
 
@@ -45,8 +42,7 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        self.filter = [ALAssetsFilter allPhotos];
-        self.groupTypes = ALAssetsGroupAll;
+
     }
     
     return self;
@@ -95,7 +91,7 @@
                                                                                            target:self
                                                                                            action:@selector(cancelButtonAction:)];
     
-    [self.assetsLibrary enumerateGroupsWithTypes:self.groupTypes usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+    [self.assetsLibrary enumerateGroupsWithTypes:self.assetPickerConfig.assetsGroupTypes usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
         
         // If group is nil, the end has been reached.
         if (group == nil) {
@@ -112,7 +108,7 @@
             return;
         }
 
-        [group setAssetsFilter:self.filter];
+        [group setAssetsFilter:self.assetPickerConfig.assetsFilter];
 
         if (![group numberOfAssets]) {
             // No sense showing empty groups/albums

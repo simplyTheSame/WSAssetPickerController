@@ -126,8 +126,8 @@
 
 - (ALAssetsGroupType)assetsGroupTypes
 {
-    if (_assetsGroupTypes) {
-        _assetsGroupTypes = ALAssetsGroupAll;
+    if (_assetsGroupTypes == 0) {
+        _assetsGroupTypes = ALAssetsGroupSavedPhotos | ALAssetsGroupAlbum | ALAssetsGroupLibrary | ALAssetsGroupPhotoStream;
     }
         
     return _assetsGroupTypes;

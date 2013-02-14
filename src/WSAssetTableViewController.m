@@ -275,6 +275,7 @@
     
     if (cell == nil) {
         cell = [[WSAssetsTableViewCell alloc] initWithAssets:[self assetsForIndexPath:indexPath] assetCellParams:self.assetCellParams reuseIdentifier:AssetCellIdentifier];
+        cell.assetPickerConfig = self.assetPickerConfig;
     } else {
         cell.cellAssetViews = [self assetsForIndexPath:indexPath];
         cell.assetCellParams = self.assetCellParams;
