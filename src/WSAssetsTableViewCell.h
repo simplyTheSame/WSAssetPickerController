@@ -32,8 +32,7 @@
 @property (nonatomic, weak) id<WSAssetsTableViewCellDelegate> assetTableViewDelegate;
 @property (nonatomic, strong) WSAssetPickerConfig *assetPickerConfig;
 
-+ (WSAssetsTableViewCell *)assetsCellWithAssets:(NSArray *)assets reuseIdentifier:(NSString *)identifier;
-- (id)initWithAssets:(NSArray *)assets assetCellParams:(AssetCellParams*)assetCellParams reuseIdentifier:(NSString *)identifier;
+- (id)initWithAssets:(NSArray *)assets assetCellParams:(AssetCellParams*)assetCellParams assetPickerConfig:(WSAssetPickerConfig *)assetPickerConfig reuseIdentifier:(NSString *)identifier;
 
 @end
 

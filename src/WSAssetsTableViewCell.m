@@ -25,17 +25,11 @@
 
 @implementation WSAssetsTableViewCell
 
-+ (WSAssetsTableViewCell *)assetsCellWithAssets:(NSArray *)assets reuseIdentifier:(NSString *)identifier
-{
-    WSAssetsTableViewCell *cell = [[WSAssetsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-    cell.cellAssetViews = assets;
-    
-    return cell;
-}
 
-- (id)initWithAssets:(NSArray *)assets assetCellParams:(AssetCellParams *)assetCellParams reuseIdentifier:(NSString *)identifier
+- (id)initWithAssets:(NSArray *)assets assetCellParams:(AssetCellParams *)assetCellParams assetPickerConfig:(WSAssetPickerConfig *)assetPickerConfig reuseIdentifier:(NSString *)identifier
 {
     if ((self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier])) {
+        self.assetPickerConfig = assetPickerConfig;
         self.assetCellParams = assetCellParams;
         self.cellAssetViews = assets;
     }

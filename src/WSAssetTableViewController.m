@@ -274,8 +274,10 @@
     WSAssetsTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:AssetCellIdentifier];
     
     if (cell == nil) {
-        cell = [[WSAssetsTableViewCell alloc] initWithAssets:[self assetsForIndexPath:indexPath] assetCellParams:self.assetCellParams reuseIdentifier:AssetCellIdentifier];
-        cell.assetPickerConfig = self.assetPickerConfig;
+        cell = [[WSAssetsTableViewCell alloc] initWithAssets:[self assetsForIndexPath:indexPath]
+                                             assetCellParams:self.assetCellParams
+                                           assetPickerConfig:self.assetPickerConfig
+                                             reuseIdentifier:AssetCellIdentifier];
     } else {
         cell.cellAssetViews = [self assetsForIndexPath:indexPath];
         cell.assetCellParams = self.assetCellParams;
