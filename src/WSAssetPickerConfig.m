@@ -33,6 +33,16 @@
     return sharedInstance;
 }
 
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        _albumSortingAlphabeticaly = YES;
+    }
+    
+    return self;
+}
+
 - (void)setAlbumTableAssetCountLabelFormat:(NSString *)albumTableAssetCountLabelFormat
 {
     if ([albumTableAssetCountLabelFormat rangeOfString:@"%d"].length > 0) {

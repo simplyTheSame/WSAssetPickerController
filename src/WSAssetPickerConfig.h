@@ -14,6 +14,7 @@
 
 @property (nonatomic, strong) NSString *albumTableNavigationItemTitle;
 @property (nonatomic, strong) NSString *albumTableAssetCountLabelFormat;
+@property (nonatomic, getter = isAlbumSortingAlphabeticaly) BOOL albumSortingAlphabeticaly;
 @property (nonatomic, strong) NSString *selectedAssetImageName;
 @property (nonatomic, strong) NSString *videoAssetImageName;
 

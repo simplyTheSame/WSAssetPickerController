@@ -96,20 +96,26 @@
 {
     [super viewDidLoad];
 
-    self.navigationItem.title = @"Loading…";
+    self.navigationItem.title = [WSAssetPickerConfig sharedInstance].albumTableNavigationItemTitle;
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel 
-                                                                                           target:self 
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                                                                           target:self
                                                                                            action:@selector(cancelButtonAction:)];
     
     [self.assetsLibrary enumerateGroupsWithTypes:self.groupTypes usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
         
         // If group is nil, the end has been reached.
         if (group == nil) {
-            
+            if ([WSAssetPickerConfig sharedInstance].isAlbumSortingAlphabeticaly) {
+                [self.assetGroups sortUsingComparator:^NSComparisonResult(ALAssetsGroup *group1, ALAssetsGroup* group2) {
+                    return [[group1 valueForProperty:ALAssetsGroupPropertyName] compare:[group2 valueForProperty:ALAssetsGroupPropertyName] options:NSCaseInsensitiveSearch];
+                }];
+            }
+
             dispatch_async(dispatch_get_main_queue(), ^{
-                self.navigationItem.title = [WSAssetPickerConfig sharedInstance].albumTableNavigationItemTitle;
+                    [self.tableView reloadData];
             });
+            
             return;
         }
 
@@ -124,10 +130,11 @@
         [self.assetGroups addObject:group];
         
         // Reload the tableview on the main thread.
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView reloadData];
-        });
-        
+        if (![WSAssetPickerConfig sharedInstance].isAlbumSortingAlphabeticaly) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.tableView reloadData];
+            });
+        }        
     } failureBlock:^(NSError *error) {
         id <WSAssetPickerControllerDelegate> delegate = (id <WSAssetPickerControllerDelegate>)self.pickerDelegate;
         
