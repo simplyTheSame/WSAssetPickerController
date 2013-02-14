@@ -129,7 +129,7 @@
         
         if (error.code == ALAssetsLibraryAccessUserDeniedError || error.code == ALAssetsLibraryAccessGloballyDeniedError) {
             NSLog(@"errorCode: %d", error.code);
-            if ([delegate respondsToSelector:@selector(assetPickerControllerDidFailWithError)]) {
+            if ([delegate respondsToSelector:@selector(assetPickerController:didFailWithError:)]) {
                 [delegate assetPickerController:self.assetPickerController didFailWithError:error.code];
             }
         }
