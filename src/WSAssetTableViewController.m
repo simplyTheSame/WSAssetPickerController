@@ -22,6 +22,8 @@
 #import "WSAssetPickerState.h"
 #import "WSAssetsTableViewCell.h"
 #import "WSAssetWrapper.h"
+#import "WSAssetPickerConfig.h"
+
 
 #define ASSET_MIN_WIDTH 75
 #define PADDING_MIN_WIDTH 4.0
@@ -81,7 +83,11 @@
 
 - (void)viewDidLoad
 {
-    self.navigationItem.title = @"Loading";
+    if (self.assetsGroup) {
+        self.navigationItem.title = [self.assetsGroup valueForProperty:ALAssetsGroupPropertyName];
+    } else {
+        self.navigationItem.title = @"Loading";
+    }
     
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
                                                                                            target:self 
@@ -175,7 +181,8 @@
     
     dispatch_async(enumQ, ^{
         
-        [self.assetsGroup enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
+        NSEnumerationOptions *enumnerationOptions = [[WSAssetPickerConfig sharedInstance] assetEnumerationOptions];
+        [self.assetsGroup enumerateAssetsWithOptions:enumnerationOptions usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
             
             if (!result || index == NSNotFound) {
                 DLog(@"Done fetching.");

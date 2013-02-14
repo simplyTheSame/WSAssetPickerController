@@ -38,6 +38,7 @@
     self = [super init];
     if (self) {
         _albumSortingAlphabeticaly = YES;
+        _assetEnumerationOptions = NSEnumerationReverse;
     }
     
     return self;
