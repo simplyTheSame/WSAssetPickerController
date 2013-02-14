@@ -30,6 +30,7 @@
 @property (nonatomic) UIStatusBarStyle originalStatusBarStyle;
 @property (nonatomic, strong) WSAlbumTableViewController *albumTableViewController;
 @property (nonatomic, weak) id<WSAssetPickerControllerDelegate> pickerDelegate;
+@property (nonatomic, strong) WSAssetPickerConfig *pickerConfig;
 
 @end
 
@@ -43,9 +44,13 @@
 
 - (id)initWithDelegate:(id <WSAssetPickerControllerDelegate>)delegate;
 {
+    self.pickerConfig = [[WSAssetPickerConfig alloc] init];
+    
     // Create the Album TableView Controller.
     self.albumTableViewController = [[WSAlbumTableViewController alloc] initWithStyle:UITableViewStylePlain];
     self.albumTableViewController.assetPickerState = self.assetPickerState;
+    self.albumTableViewController.assetPickerConfig = self.pickerConfig;
+    self.albumTableViewController.assetPickerController = self;
     self.albumTableViewController.pickerDelegate = delegate;
     
     if ((self = [super initWithRootViewController:self.albumTableViewController])) {
@@ -126,18 +131,52 @@
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
-#pragma mark - Filtering
 
-// Forward these calls on to albums controller.
--(void)setAssetGroupTypes:(ALAssetsGroupType)types
+#pragma mark - Configuration -
+
+- (void)setAssetsFilter:(ALAssetsFilter *)assetsFilter
 {
-    [self.albumTableViewController setAssetGroupTypes:types];
+    self.pickerConfig.assetsFilter = assetsFilter;
 }
 
--(void)setAssetsFilter:(ALAssetsFilter *)filter
+- (void)setAssetsGroupTypes:(ALAssetsGroupType)assetsGroupTypes
 {
-    [self.albumTableViewController setAssetsFilter:filter];
+    self.pickerConfig.assetsGroupTypes = assetsGroupTypes;
 }
 
+- (void)setAlbumSortingAlphabeticaly:(BOOL)albumSortingAlphabeticaly
+{
+    self.pickerConfig.albumSortingAlphabeticaly = albumSortingAlphabeticaly;
+}
+
+- (void)setAssetEnumerationOptions:(NSEnumerationOptions)assetEnumerationOptions
+{
+    self.pickerConfig.assetEnumerationOptions = assetEnumerationOptions;
+}
+
+- (void)setAlbumTableNavigationItemTitle:(NSString *)albumTableNavigationItemTitle
+{
+    self.pickerConfig.albumTableNavigationItemTitle = albumTableNavigationItemTitle;
+}
+
+- (void)setAlbumTableAssetCountLabelFormat:(NSString *)albumTableAssetCountLabelFormat
+{
+    self.pickerConfig.albumTableAssetCountLabelFormat = albumTableAssetCountLabelFormat;
+}
+
+- (void)setAssetTableNavigationItemTitle:(NSString *)assetTableNavigationItemTitle
+{
+    self.pickerConfig.assetTableNavigationItemTitle = assetTableNavigationItemTitle;
+}
+
+- (void)setSelectedAssetImageName:(NSString *)selectedAssetImageName
+{
+    self.pickerConfig.selectedAssetImageName = selectedAssetImageName;
+}
+
+- (void)setVideoAssetImageName:(NSString *)videoAssetImageName
+{
+    self.pickerConfig.videoAssetImageName = videoAssetImageName;
+}
 
 @end

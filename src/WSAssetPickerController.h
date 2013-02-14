@@ -24,16 +24,31 @@
 
 @protocol WSAssetPickerControllerDelegate;
 
+
 @interface WSAssetPickerController : UINavigationController
 
 @property (nonatomic, readonly) NSArray *selectedAssets;
 @property (nonatomic, readonly) NSUInteger selectedCount; // Observable via key-value observing.
 
+// filtering
+@property (nonatomic, strong) ALAssetsFilter *assetsFilter;
+@property (nonatomic) ALAssetsGroupType assetsGroupTypes;
+
+// sorting
+@property (nonatomic, getter = isAlbumSortingAlphabeticaly) BOOL albumSortingAlphabeticaly;
+@property (nonatomic) NSEnumerationOptions assetEnumerationOptions;
+
+// strings
+@property (nonatomic, strong) NSString *albumTableNavigationItemTitle;
+@property (nonatomic, strong) NSString *albumTableAssetCountLabelFormat;
+@property (nonatomic, strong) NSString *assetTableNavigationItemTitle;
+
+// indicator images
+@property (nonatomic, strong) NSString *selectedAssetImageName;
+@property (nonatomic, strong) NSString *videoAssetImageName;
+
 // Designated initializer.
 - (id)initWithDelegate:(id<WSAssetPickerControllerDelegate>)delegate;
-
-- (void)setAssetGroupTypes:(ALAssetsGroupType)types;
-- (void)setAssetsFilter:(ALAssetsFilter *)filter;
 
 @end
 
@@ -41,17 +56,14 @@
 @protocol WSAssetPickerControllerDelegate <NSObject>
 
 // Called when the 'cancel' button it tapped.
-- (void)assetPickerControllerDidCancel:(WSAssetPickerController *)sender;
+- (void)assetPickerControllerDidCancel:(WSAssetPickerController *)picker;
 
 // Called when the done button is tapped.
-- (void)assetPickerController:(WSAssetPickerController *)sender didFinishPickingMediaWithAssets:(NSArray *)assets;
+- (void)assetPickerController:(WSAssetPickerController *)picker didFinishPickingMediaWithAssets:(NSArray *)assets;
 
-
-
-// Optional but encouraged to implement!
 @optional
 
 // Called when access to asset library was denied. Enabled so show custom error message to the user.
-- (void)assetPickerControllerDidFailWithError;
+- (void)assetPickerController:(WSAssetPickerController *)picker didFailWithError:(NSInteger)errorCode;
 
 @end

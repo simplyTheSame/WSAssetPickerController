@@ -10,13 +10,21 @@
 
 @interface WSAssetPickerConfig : NSObject
 
-+ (WSAssetPickerConfig *)sharedInstance;
+// filtering
+@property (nonatomic, strong) ALAssetsFilter *assetsFilter;
+@property (nonatomic) ALAssetsGroupType assetsGroupTypes;
 
+// sorting
+@property (nonatomic, getter = isAlbumSortingAlphabeticaly) BOOL albumSortingAlphabeticaly;
+@property (nonatomic) NSEnumerationOptions assetEnumerationOptions;
+
+// strings
 @property (nonatomic, strong) NSString *albumTableNavigationItemTitle;
 @property (nonatomic, strong) NSString *albumTableAssetCountLabelFormat;
+@property (nonatomic, strong) NSString *assetTableNavigationItemTitle;
+
+// indicator images
 @property (nonatomic, strong) NSString *selectedAssetImageName;
 @property (nonatomic, strong) NSString *videoAssetImageName;
-@property (nonatomic, getter = isAlbumSortingAlphabeticaly) BOOL albumSortingAlphabeticaly;
-@property (nonatomic) NSEnumerationOptions *assetEnumerationOptions;
 
 @end

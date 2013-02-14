@@ -83,10 +83,14 @@
 
 - (void)viewDidLoad
 {
-    if (self.assetsGroup) {
-        self.navigationItem.title = [self.assetsGroup valueForProperty:ALAssetsGroupPropertyName];
+    if (self.assetPickerConfig.assetTableNavigationItemTitle) {
+        self.navigationItem.title = self.assetPickerConfig.assetTableNavigationItemTitle;
     } else {
-        self.navigationItem.title = @"Loading";
+        if (self.assetsGroup) {
+            self.navigationItem.title = [self.assetsGroup valueForProperty:ALAssetsGroupPropertyName];
+        } else {
+            self.navigationItem.title = @"Loading";
+        }
     }
     
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
@@ -181,7 +185,7 @@
     
     dispatch_async(enumQ, ^{
         
-        NSEnumerationOptions *enumnerationOptions = [[WSAssetPickerConfig sharedInstance] assetEnumerationOptions];
+        NSEnumerationOptions enumnerationOptions = self.assetPickerConfig.assetEnumerationOptions;
         [self.assetsGroup enumerateAssetsWithOptions:enumnerationOptions usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
             
             if (!result || index == NSNotFound) {
@@ -189,7 +193,7 @@
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.tableView reloadData];
-                    self.navigationItem.title = [NSString stringWithFormat:@"%@", [self.assetsGroup valueForProperty:ALAssetsGroupPropertyName]];
+//                    self.navigationItem.title = [NSString stringWithFormat:@"%@", [self.assetsGroup valueForProperty:ALAssetsGroupPropertyName]];
                 });
                 
                 return;

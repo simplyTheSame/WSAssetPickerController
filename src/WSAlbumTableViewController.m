@@ -30,6 +30,7 @@
 @property (nonatomic, strong) ALAssetsLibrary *assetsLibrary;
 @property (nonatomic, strong) NSMutableArray *assetGroups; // Model (all groups of assets).
 @property (nonatomic, strong) ALAssetsFilter *filter;
+
 @property ALAssetsGroupType groupTypes;
 
 @end
@@ -43,21 +44,13 @@
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
-    self.filter = [ALAssetsFilter allPhotos];
-    self.groupTypes = ALAssetsGroupAll;
+    if (self) {
+        self.filter = [ALAssetsFilter allPhotos];
+        self.groupTypes = ALAssetsGroupAll;
+    }
+    
     return self;
 }
-
--(void)setAssetGroupTypes:(ALAssetsGroupType)types
-{
-    self.groupTypes = types;
-}
-
--(void)setAssetsFilter:(ALAssetsFilter *)filter
-{
-    self.filter = filter;
-}
-
 
 #pragma mark - Getters 
 
@@ -96,7 +89,7 @@
 {
     [super viewDidLoad];
 
-    self.navigationItem.title = [WSAssetPickerConfig sharedInstance].albumTableNavigationItemTitle;
+    self.navigationItem.title = self.assetPickerConfig.albumTableNavigationItemTitle;
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
                                                                                            target:self
@@ -106,7 +99,7 @@
         
         // If group is nil, the end has been reached.
         if (group == nil) {
-            if ([WSAssetPickerConfig sharedInstance].isAlbumSortingAlphabeticaly) {
+            if (self.assetPickerConfig.isAlbumSortingAlphabeticaly) {
                 [self.assetGroups sortUsingComparator:^NSComparisonResult(ALAssetsGroup *group1, ALAssetsGroup* group2) {
                     return [[group1 valueForProperty:ALAssetsGroupPropertyName] compare:[group2 valueForProperty:ALAssetsGroupPropertyName] options:NSCaseInsensitiveSearch];
                 }];
@@ -130,7 +123,7 @@
         [self.assetGroups addObject:group];
         
         // Reload the tableview on the main thread.
-        if (![WSAssetPickerConfig sharedInstance].isAlbumSortingAlphabeticaly) {
+        if (!self.assetPickerConfig.isAlbumSortingAlphabeticaly) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.tableView reloadData];
             });
@@ -141,7 +134,7 @@
         if (error.code == ALAssetsLibraryAccessUserDeniedError || error.code == ALAssetsLibraryAccessGloballyDeniedError) {
             NSLog(@"errorCode: %d", error.code);
             if ([delegate respondsToSelector:@selector(assetPickerControllerDidFailWithError)]) {
-                [delegate assetPickerControllerDidFailWithError];
+                [delegate assetPickerController:self.assetPickerController didFailWithError:error.code];
             }
         }
 
@@ -186,7 +179,7 @@
     
     // Setup the cell.
     cell.albumTitleLabel.text = [group valueForProperty:ALAssetsGroupPropertyName];
-    cell.assetCountLabel.text = [NSString stringWithFormat:[WSAssetPickerConfig sharedInstance].albumTableAssetCountLabelFormat, [group numberOfAssets]];
+    cell.assetCountLabel.text = [NSString stringWithFormat:self.assetPickerConfig.albumTableAssetCountLabelFormat, [group numberOfAssets]];
     cell.albumThumbnailView.image = [UIImage imageWithCGImage:[group posterImage]];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
@@ -203,6 +196,7 @@
     WSAssetTableViewController *assetTableViewController = [[WSAssetTableViewController alloc] initWithStyle:UITableViewStylePlain];
     assetTableViewController.assetPickerState = self.assetPickerState;
     assetTableViewController.assetsGroup = group;
+    assetTableViewController.assetPickerConfig = self.assetPickerConfig;
     
     [self.navigationController pushViewController:assetTableViewController animated:YES];
 }

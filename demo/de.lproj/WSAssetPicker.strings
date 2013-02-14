@@ -6,6 +6,5 @@
   Copyright (c) 2013 Wesley D. Smith. All rights reserved.
 */
 
-"loading" = "lade..";
-"albumPickerNavigationItemTitle" = "Alben";
-"assetCountLabelFormat" = "%d Elemente";
+"wsassetpicker_albumPickerNavigationItemTitle" = "Alben";
+"wsassetpicker_albumPickerAssetCountLabelFormat" = "%d Elemente";

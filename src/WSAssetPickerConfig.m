@@ -10,28 +10,22 @@
 #import "WSAssetPickerConfig.h"
 
 
-#define DEFAULT_SELECTED_ASSET_IMAGE_NAME          @"WSAssetViewSelectionIndicator.png"
-#define DEFAULT_VIDEO_ASSET_IMAGE_NAME             @"WSAssetViewVideoIndicator.png"
-#define DEFAULT_NAVIGATION_ITEM_TITLE              NSLocalizedString(@"albumPickerNavigationItemTitle", nil)
-#define DEFAULT_ASSET_COUNT_FORMAT                 NSLocalizedString(@"assetCountLabelFormat", nil)
+#define DEFAULT_SELECTED_ASSET_IMAGE_NAME                   @"WSAssetViewSelectionIndicator.png"
+#define DEFAULT_VIDEO_ASSET_IMAGE_NAME                      @"WSAssetViewVideoIndicator.png"
+
+#define ALBUM_PICKER_NAVIGATION_ITEM_TITLE_KEY              @"wsassetpicker_albumPickerNavigationItemTitle"
+#define ASSET_PICKER_NAVIGATION_ITEM_TITLE_KEY              @"wsassetpicker_assetPickerNavigationItemTitle"
+#define ALBUM_PICKER_ASSET_COUNT_FORMAT_KEY                 @"wsassetpicker_albumPickerAssetCountLabelFormat"
+
+#define STRINGS_TABLE_NAME                                  @"WSAssetPicker"
 
 
 @implementation WSAssetPickerConfig
 
 @synthesize albumTableAssetCountLabelFormat = _albumTableAssetCountLabelFormat;
+@synthesize assetTableNavigationItemTitle = _assetTableNavigationItemTitle;
 @synthesize videoAssetImageName = _videoAssetImageName;
 @synthesize selectedAssetImageName = _selectedAssetImageName;
-
-+ (WSAssetPickerConfig *)sharedInstance
-{
-    static dispatch_once_t once;
-    static WSAssetPickerConfig *sharedInstance;
-    dispatch_once(&once, ^{
-        sharedInstance = [[self alloc] init];
-    });
-    
-    return sharedInstance;
-}
 
 - (id)init
 {
@@ -55,12 +49,32 @@
 
 - (NSString *)albumTableAssetCountLabelFormat
 {
-    return _albumTableAssetCountLabelFormat ? _albumTableAssetCountLabelFormat : DEFAULT_ASSET_COUNT_FORMAT;
+    if (!_albumTableAssetCountLabelFormat) {
+        _albumTableAssetCountLabelFormat = [self userOverrideableStringForKey:ALBUM_PICKER_ASSET_COUNT_FORMAT_KEY];
+    }
+    
+    return _albumTableAssetCountLabelFormat;
 }
 
 - (NSString *)albumTableNavigationItemTitle
 {
-    return _albumTableNavigationItemTitle ? _albumTableNavigationItemTitle : DEFAULT_NAVIGATION_ITEM_TITLE;
+    if (!_albumTableNavigationItemTitle) {
+        _albumTableNavigationItemTitle = [self userOverrideableStringForKey:ALBUM_PICKER_NAVIGATION_ITEM_TITLE_KEY];
+    }
+    
+    return _albumTableNavigationItemTitle;
+}
+
+- (NSString *)assetTableNavigationItemTitle
+{
+    if (!_assetTableNavigationItemTitle) {
+        NSString *titleString = NSLocalizedString(ASSET_PICKER_NAVIGATION_ITEM_TITLE_KEY, nil);
+        if (![titleString isEqualToString:ASSET_PICKER_NAVIGATION_ITEM_TITLE_KEY]) {
+            return titleString;
+        }
+    }
+    
+    return _assetTableNavigationItemTitle;
 }
 
 - (void)setSelectedAssetImageName:(NSString *)selectedAssetImageName
@@ -70,6 +84,16 @@
     } else {
         NSLog(@"Warning: specified image '%@' for selected asset not found!", selectedAssetImageName);
     }
+}
+
+- (NSString *)userOverrideableStringForKey:(NSString *)stringKey
+{
+    NSString *userDefinedString = NSLocalizedString(stringKey, nil);
+    if (![userDefinedString isEqualToString:stringKey]) {
+        return userDefinedString;
+    }
+    
+    return NSLocalizedStringFromTable(stringKey, STRINGS_TABLE_NAME, nil);
 }
 
 - (NSString *)selectedAssetImageName
@@ -89,6 +113,24 @@
 - (NSString *)videoAssetImageName
 {
     return _videoAssetImageName ? _videoAssetImageName : DEFAULT_VIDEO_ASSET_IMAGE_NAME;
+}
+
+- (ALAssetsFilter *)assetsFilter
+{
+    if (!_assetsFilter) {
+        _assetsFilter = [ALAssetsFilter allPhotos];
+    }
+    
+    return _assetsFilter;
+}
+
+- (ALAssetsGroupType)assetsGroupTypes
+{
+    if (_assetsGroupTypes) {
+        _assetsGroupTypes = ALAssetsGroupAll;
+    }
+        
+    return _assetsGroupTypes;
 }
 
 @end

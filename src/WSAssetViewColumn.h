@@ -24,11 +24,13 @@
 @interface WSAssetViewColumn : UIView
 
 @property (nonatomic) NSUInteger column;
-@property (nonatomic, getter=isSelected) BOOL selected;
+@property (nonatomic, getter = isSelected) BOOL selected;
 @property (nonatomic, strong) NSString *selectedAssetImageName;
 @property (nonatomic, strong) NSString *videoAssetImageName;
 
+// designated initializer
 - (id)initWithImage:(UIImage *)thumbnail andFrame:(CGRect)frame;
+
 - (void)markAsVideo:(BOOL)isVideo;
 
 @end

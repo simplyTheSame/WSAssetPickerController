@@ -29,8 +29,10 @@
 
 @property (nonatomic, weak) WSAssetPickerState *assetPickerState;
 @property (nonatomic, weak) id<WSAssetPickerControllerDelegate> pickerDelegate;
+@property (nonatomic, strong) WSAssetPickerController *assetPickerController;
+@property (nonatomic, strong) WSAssetPickerConfig *assetPickerConfig;
 
-- (void)setAssetGroupTypes:(ALAssetsGroupType)types;
-- (void)setAssetsFilter:(ALAssetsFilter *)filter;
+// designated initializer
+- (id)initWithStyle:(UITableViewStyle)style;
 
 @end

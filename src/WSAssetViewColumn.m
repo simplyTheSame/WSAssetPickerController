@@ -87,7 +87,7 @@
 {
     if (!_selectedView) {
         // Lazily create the selectedView.
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[WSAssetPickerConfig sharedInstance].selectedAssetImageName]];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:self.selectedAssetImageName]];
         imageView.frame = self.assetFrame;
         imageView.hidden = YES;
         imageView.layer.borderWidth = 0.5;
@@ -108,7 +108,7 @@
 
 - (void)markAsVideo:(BOOL)isVideo {
     if(!_videoView) {
-        UIImageView *videoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[WSAssetPickerConfig sharedInstance].videoAssetImageName]];
+        UIImageView *videoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:self.videoAssetImageName]];
         videoView.frame = self.assetFrame;
         _videoView = videoView;
         [self addSubview:videoView];

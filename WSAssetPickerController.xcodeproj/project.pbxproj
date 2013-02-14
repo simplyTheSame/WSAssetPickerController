@@ -75,9 +75,7 @@
 		7E72E70516C84CB00023998B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/WSAssetPicker.strings; sourceTree = "<group>"; };
 		7E72E70716C84DC00023998B /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/WSAssetPicker.strings; sourceTree = "<group>"; };
 		7E72E70816C84DC00023998B /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		7E72E70916C84DC90023998B /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/WSAssetPicker.strings; sourceTree = "<group>"; };
 		7E72E70A16C84DC90023998B /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		7E72E70B16C84DD50023998B /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/WSAssetPicker.strings; sourceTree = "<group>"; };
 		7E72E70C16C84DD50023998B /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D84A10E7169E18D9002F7DCC /* WSAssetViewVideoIndicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WSAssetViewVideoIndicator.png; sourceTree = "<group>"; };
 		D84A10E8169E18D9002F7DCC /* WSAssetViewVideoIndicator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WSAssetViewVideoIndicator@2x.png"; sourceTree = "<group>"; };
@@ -311,7 +309,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = WS;
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Wesley D. Smith";
 			};
 			buildConfigurationList = DE017CEE155EC92F002E7BB0 /* Build configuration list for PBXProject "WSAssetPickerController" */;
@@ -408,8 +406,6 @@
 			children = (
 				7E72E70516C84CB00023998B /* en */,
 				7E72E70716C84DC00023998B /* de */,
-				7E72E70916C84DC90023998B /* es */,
-				7E72E70B16C84DD50023998B /* fr */,
 			);
 			name = WSAssetPicker.strings;
 			sourceTree = "<group>";
@@ -434,6 +430,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -460,6 +460,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;

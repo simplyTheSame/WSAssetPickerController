@@ -61,8 +61,11 @@
 
     // Default is ALAssetsGroupAll and only photos.
     // These settings will let you capture video as well.
-    [self.pickerController setAssetGroupTypes:ALAssetsGroupSavedPhotos | ALAssetsGroupAlbum | ALAssetsGroupLibrary | ALAssetsGroupPhotoStream];
-    [self.pickerController setAssetsFilter:[ALAssetsFilter allAssets]];
+    self.pickerController.assetsGroupTypes = ALAssetsGroupSavedPhotos | ALAssetsGroupAlbum | ALAssetsGroupLibrary | ALAssetsGroupPhotoStream;
+    self.pickerController.assetsFilter = [ALAssetsFilter allAssets];
+    self.pickerController.albumSortingAlphabeticaly = NO;
+    self.pickerController.assetEnumerationOptions = NSEnumerationConcurrent;
+    self.pickerController.assetTableNavigationItemTitle = @"Select items:";
     
     [self presentViewController:self.pickerController animated:YES completion:NULL];
 }
@@ -136,7 +139,7 @@
     }];
 }
 
-- (void)assetPickerControllerDidFailWithError
+- (void)assetPickerController:(WSAssetPickerController *)picker didFailWithError:(NSInteger)errorCode
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         UIAlertView *alert =  [[UIAlertView alloc] initWithTitle:@"Error" message:@"Not allowed to access asset library." delegate:nil cancelButtonTitle:@"Shoot!" otherButtonTitles:nil];
